@@ -9,8 +9,23 @@ public class meta : MonoBehaviour {
 		
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	static GameObject META;
+
+	/// <summary>
+	/// Returns the object with the Metascript attached to it
+	/// </summary>
+	/// <returns></returns>
+	private static GameObject GetMeta(){
+		if(META == null)
+			META = GameObject.Find("Meta");
+		return META;
+	}
+
+	// Example for getting a component
+	static meta METASCRIPT;
+	public static meta GetMetaScript(){
+		if(META == null)
+			METASCRIPT = GetMeta().GetComponent<meta>();
+		return METASCRIPT;
 	}
 }
