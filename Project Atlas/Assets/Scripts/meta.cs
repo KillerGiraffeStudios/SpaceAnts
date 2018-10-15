@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class meta : MonoBehaviour {
+public class Meta : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -22,10 +22,10 @@ public class meta : MonoBehaviour {
 	}
 
 	// Example for getting a component
-	static meta METASCRIPT;
-	public static meta GetMetaScript(){
+	static Meta METASCRIPT;
+	public static Meta GetMetaScript(){
 		if(META == null)
-			METASCRIPT = GetMeta().GetComponent<meta>();
+			METASCRIPT = GetMeta().GetComponent<Meta>();
 		return METASCRIPT;
 	}
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class global_ship : MonoBehaviour {
+public class Global_Ship : MonoBehaviour {
 
     // The ship's current health
     private int health;
@@ -16,14 +16,28 @@ public class global_ship : MonoBehaviour {
     // The total population of the ship
     private int totalPopulation;
 
-    // Array of the rooms contained in the ship
-    private room[,] rooms;
+    //Generation Script
+    [SerializeField]
+    private Generate_Ship generationScript;
+
+    //Game size
+    private int gameSize = 100;
+
+    // Array of the buildings contained in the ship
+    private GameObject[,] rooms;
+
+
+
 
 	// Use this for initialization
 	void Start () {
         this.health = 100;
         this.happiness = 50;
         this.totalFood = 200;
+
+        rooms = new GameObject[gameSize, gameSize];
+
+        rooms = generationScript.generate(gameSize);
 	}
 	
 	// Update is called once per frame
@@ -31,6 +45,7 @@ public class global_ship : MonoBehaviour {
 		
 	}
 
+    
 
     /// <summary>
     /// 
