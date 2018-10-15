@@ -26,10 +26,10 @@ public class Generate_Ship : MonoBehaviour{
     public int buildingDensity = 5;
     //Some others for amount of industry etc.
 
-    private int splitVariance = 2;
+    private int splitVariance = 4;
 
-    private int minBlockSize =2;
-    private int maxBlockSize =5;
+    private int minBlockSize =3;
+    private int maxBlockSize =9;
 
 
     //Types of buildings
@@ -38,6 +38,15 @@ public class Generate_Ship : MonoBehaviour{
 
     [SerializeField]
     private GameObject EndWall;
+
+    [SerializeField]
+    private GameObject LargeBuilding;
+
+    [SerializeField]
+    private GameObject MediumBuilding;
+
+    [SerializeField]
+    private GameObject SmallBuilding;
 
 
     private char[,] codeLocations;
@@ -57,9 +66,12 @@ public class Generate_Ship : MonoBehaviour{
 
         foreach(Block i in buildingBlockList)
         {
+            generateRoads(i);
             generateBuildings(i);
         }
 
+
+        //Set outer wall
         for(int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
@@ -89,7 +101,7 @@ public class Generate_Ship : MonoBehaviour{
 
         
         int split;
-
+        
         if (square.width <= maxBlockSize)
         {
             split = Random.Range((int)square.position.x + splitVariance, (int)square.position.x + square.height - splitVariance);
@@ -135,13 +147,23 @@ public class Generate_Ship : MonoBehaviour{
         {
             for (int j = 0; j < block.width; j++)
             {
-                if(i == block.height -1 || j == block.width - 1)
+                if(codeLocations[(int)block.position.x + i, (int)block.position.y + j] == '\0')
+                {
+                    determineBuilding((int)block.position.x + i, (int)block.position.y + j);
+                }
+            }
+        }
+    }
+
+    private void generateRoads(Block block)
+    {
+        for (int i = 0; i < block.height; i++)
+        {
+            for (int j = 0; j < block.width; j++)
+            {
+                if (i == block.height - 1 || j == block.width - 1)
                 {
                     codeLocations[(int)block.position.x + i, (int)block.position.y + j] = 'R';
-                }
-                else
-                {
-                    codeLocations[(int)block.position.x + i, (int)block.position.y + j] = ' ';
                 }
             }
         }
@@ -162,6 +184,18 @@ public class Generate_Ship : MonoBehaviour{
                 {
                     gameObjects[i, j] = EndWall;
                 }
+                if (codeLocations[i, j] == 'S')
+                {
+                    gameObjects[i, j] = SmallBuilding;
+                }
+                if (codeLocations[i, j] == 'M')
+                {
+                    gameObjects[i, j] = MediumBuilding;
+                }
+                if (codeLocations[i, j] == 'L')
+                {
+                    gameObjects[i, j] = LargeBuilding;
+                }
 
             }
         }
@@ -176,11 +210,87 @@ public class Generate_Ship : MonoBehaviour{
             {
                 if (gameObjects[i, j] != null)
                 {
-                    Instantiate(gameObjects[i,j], new Vector2(i,j), Quaternion.identity);
+                    if (gameObjects[i, j] == MediumBuilding)
+                    {
+                        Instantiate(gameObjects[i, j], new Vector2(i + 0.5f, j + 0.5f), Quaternion.identity);
+                    }
+                    else if (gameObjects[i, j] == LargeBuilding)
+                    {
+                        Instantiate(gameObjects[i, j], new Vector2(i + 1, j + 1), Quaternion.identity);
+                    }
+                    else
+                    {
+                        Instantiate(gameObjects[i, j], new Vector2(i, j), Quaternion.identity);
+                    }
                 }
 
             }
         }
+    }
+
+    private void determineBuilding(int x, int y)
+    {
+        int chanceM = 60;
+        int chanceL = 90;
+
+        int num = Random.Range(0, 100);
+        if(num < chanceM)
+        {
+            codeLocations[x, y] = 'S';
+        }
+        else if(num < chanceL)
+        {
+            
+            //get medium building
+            if(!checkFit(x,y,new Vector2(2, 2)))
+            {
+                determineBuilding(x, y);
+            }
+            else
+            {
+                for(int i = x; i < x+2; i++)
+                {
+                    for (int j = y; j < y + 2; j++)
+                    {
+                        
+                        codeLocations[i, j] = ' ';
+                    }
+                }
+                codeLocations[x, y] = 'M';
+            }
+        }
+        else
+        {
+            //get medium building
+            if (!checkFit(x, y, new Vector2(3, 3)))
+            {
+                determineBuilding(x, y);
+            }
+            else
+            {
+                for (int i = x; i < x + 3; i++)
+                {
+                    for (int j = y; j < y + 3; j++)
+                    {
+                        codeLocations[i, j] = ' ';
+                    }
+                }
+                codeLocations[x, y] = 'L';
+            }
+        }
+    }
+
+    private bool checkFit(int x, int y, Vector2 buildingSize)
+    {
+        for (int i = x; i < x + buildingSize.x; i++)
+        {
+            for (int j = y; j < y + buildingSize.y; j++)
+            {
+                if (codeLocations[i, j] != '\0')
+                    return false;
+            }
+        }
+        return true;
     }
 
 
