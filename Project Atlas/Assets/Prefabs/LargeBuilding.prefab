@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4591072279492084}
   - component: {fileID: 212841506794861620}
   m_Layer: 0
-  m_Name: EndWall 1
+  m_Name: LargeBuilding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -155,6 +155,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingDensity: 5
   RoadTile: {fileID: 1436625563831162, guid: c558830d9778e2f42bf846623d241b38, type: 2}
+  EndWall: {fileID: 1518704048908584, guid: f4c99f46a3998404ca3bde0c76e57b95, type: 2}
+  LargeBuilding: {fileID: 1706649976105168, guid: 1ba745150f92b5540a17d55cc743d541,
+    type: 2}
+  MediumBuilding: {fileID: 1510696901379598, guid: e8f14adddae13e24ab5be6d0ca7d4c58,
+    type: 2}
+  SmallBuilding: {fileID: 1471424132009168, guid: 11be43c8be45f5d48a9236a560a48e4c,
+    type: 2}
 --- !u!4 &499022299
 Transform:
   m_ObjectHideFlags: 0
