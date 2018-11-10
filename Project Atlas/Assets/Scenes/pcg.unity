@@ -138,10 +138,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 499022296}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f62b2b255068b9443978ef66e27a5e65, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c559bc6b3f412542909a4a028772b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generationScript: {fileID: 499022298}
+  buildingDensity: 5
+  RoadTile: {fileID: 0}
+  EndWall: {fileID: 0}
+  LargeBuilding: {fileID: 0}
+  MediumBuilding: {fileID: 0}
+  SmallBuilding: {fileID: 0}
 --- !u!114 &499022298
 MonoBehaviour:
   m_ObjectHideFlags: 0
